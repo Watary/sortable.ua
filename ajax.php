@@ -11,4 +11,10 @@ require_once ('db_config.php');
 $sort = $_POST['sort'];
 $user = $_POST['user'];
 
-$mysqli->query("UPDATE item_sort SET value = '$sort' WHERE `user`='$user'");
+$result = $mysqli->query("SELECT * FROM item_sort WHERE `user`='$user'");
+
+if($result->num_rows){
+    $mysqli->query("UPDATE item_sort SET value = '$sort' WHERE `user`='$user'");
+}else{
+    $mysqli->query("INSERT INTO item_sort (`user`, `value`) VALUES ('$user', '$sort')");
+}
